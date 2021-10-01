@@ -25,7 +25,7 @@ export default function transform(arr) {
     if(element === '--discard-next'){
       index !== arr.length - 1 ? arr.splice(index, 2) : arr.splice(index);
     }else if(element === '--discard-prev'){
-      index !== 0 ? arr.splice(index - 1, 1) : arr.splice(0, 1);
+      index !== 0 ? arr.splice(index - 1, 2) : arr.splice(0, 1);
     }else if(element === '--double-next'){
       index !== arr.length - 1 ? arr.splice(index, 2, arr[index + 1], arr[index + 1]) : arr.splice(index);
     }else if(element === '--double-prev'){
