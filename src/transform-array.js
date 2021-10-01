@@ -13,7 +13,30 @@ import { NotImplementedError } from '../extensions/index.js';
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-export default function transform(/* arr */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function transform(arr) {
+  if(!(arr instanceof Array)){
+    throw new Error(`'arr' parameter must be an instance of the Array!`);
+  }
+  if(arr.length < 1){
+    return [];
+  }
+  let cloneArr = Array.from(arr);
+  cloneArr.forEach((element, index, arr) =>{
+    if(element === '--discard-next'){
+      index !== arr.length - 1 ? arr.splice(index, 2) : arr.splice(index);
+    }else if(element === '--discard-prev'){
+      index !== 0 ? arr.splice(index - 1, 1) : arr.splice(0, 1);
+    }else if(element === '--double-next'){
+      index !== arr.length - 1 ? arr.splice(index, 2, arr[index + 1], arr[index + 1]) : arr.splice(index);
+    }else if(element === '--double-prev'){
+      index !== 0 ? arr.splice(index - 1, 2, arr[index - 1], arr[index - 1]) : arr.splice(0, 1);
+    }
+  })
+  return cloneArr.filter((element)=>{
+    if(element === '--discard-next' || element === '--discard-prev' || element === '--double-next' || element === '--double-prev'){
+      return false;
+    }else{
+      return true;
+    }
+  });
 }
